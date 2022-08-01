@@ -4,21 +4,8 @@ from pathlib import Path
 
 from airflow import DAG
 from airflow.contrib.operators.kubernetes_pod_operator import KubernetesPodOperator
-from airflow.contrib.kubernetes.volume import Volume
-from airflow.contrib.kubernetes.volume_mount import VolumeMount
 
 log = logging.getLogger(__name__)
-volume_mount = VolumeMount('test-volume',
-                            mount_path='/data/storage',
-                            sub_path='storage',
-                            read_only=True)
-volume_config= {
-    'persistentVolumeClaim':
-      {
-        'claimName': 'test-volume'
-      }
-    }
-volume = Volume(name='test-volume', configs=volume_config)
 
 dag = DAG(
     "example_using_k8s_pod_operator",
@@ -49,8 +36,6 @@ with dag:
         is_delete_operator_pod=False,
         in_cluster=True,
         queue = 'kubernetes',
-        volumes=[volume],
-        volume_mounts=[volume_mount],
     )
     task_2 = KubernetesPodOperator(
         image="ubuntu:16.04",
@@ -63,8 +48,6 @@ with dag:
         is_delete_operator_pod=False,
         in_cluster=True,
         queue = 'kubernetes',
-        volumes=[volume],
-        volume_mounts=[volume_mount],
     )
 
 task_1 >> task_2
