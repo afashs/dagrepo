@@ -36,6 +36,7 @@ with dag:
         is_delete_operator_pod=False,
         in_cluster=True,
         queue = 'kubernetes',
+        get_logs=True,
     )
     task_2 = KubernetesPodOperator(
         image="ubuntu:16.04",
@@ -48,6 +49,7 @@ with dag:
         is_delete_operator_pod=False,
         in_cluster=True,
         queue = 'kubernetes',
+        get_logs=True,
     )
 
 task_1 >> task_2
