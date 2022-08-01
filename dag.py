@@ -24,6 +24,18 @@ dag = DAG(
     },
 )
 
+volume_config= {
+    'persistentVolumeClaim':
+        {
+            'claimName': 'test-volume'
+        }
+    }
+volume = Volume(name='test-volume', configs=volume_config)
+volume_mount = VolumeMount('test-volume',
+                            mount_path='/root/mount_file',
+                            sub_path=None,
+                            read_only=True)
+
 with dag:
     task_1 = KubernetesPodOperator(
         image="ubuntu:16.04",
@@ -36,6 +48,8 @@ with dag:
         is_delete_operator_pod=False,
         in_cluster=True,
         queue = 'kubernetes',
+        volumes=[volume],
+        volume_mounts=[volume_mount],
     )
     task_2 = KubernetesPodOperator(
         image="ubuntu:16.04",
@@ -48,6 +62,8 @@ with dag:
         is_delete_operator_pod=False,
         in_cluster=True,
         queue = 'kubernetes',
+        volumes=[volume],
+        volume_mounts=[volume_mount],
     )
 
 task_1 >> task_2
