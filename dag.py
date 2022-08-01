@@ -33,7 +33,7 @@ with dag:
         labels={"foo": "bar"},
         name="test-using-k8spodoperator-task-1",
         task_id="task-1-echo",
-        is_delete_operator_pod=True,
+        is_delete_operator_pod=False,
         in_cluster=True,
         get_logs=True,
     )
@@ -45,7 +45,7 @@ with dag:
         labels={"foo": "bar"},
         name="test-using-k8spodoperator-task-2",
         task_id="task-2-sleep",
-        is_delete_operator_pod=True,
+        is_delete_operator_pod=False,
         in_cluster=True,
         get_logs=True,
     )
