@@ -3,9 +3,7 @@ from datetime import datetime, timedelta
 from pathlib import Path
 
 from airflow import DAG
-from airflow.operators.dummy_operator import DummyOperator
 from airflow.contrib.operators.kubernetes_pod_operator import KubernetesPodOperator
-from kubernetes.client import models as k8s
 
 log = logging.getLogger(__name__)
 
@@ -25,20 +23,12 @@ dag = DAG(
     },
 )
 
-volume_mount = k8s.V1VolumeMount(
-    name='test-volume', mount_path='/root/mount_file', sub_path=None, read_only=True
-)
-
-volume = k8s.V1Volume(
-    name='test-volume',
-    persistent_volume_claim=k8s.V1PersistentVolumeClaimVolumeSource(claim_name='test-volume'),
-)
 
 with dag:
     task_1 = KubernetesPodOperator(
-        image="ubuntu:16.04",
+        image="python:3.7",
         namespace="airflow",
-        cmds=["bash", "-cx"],
+        cmds=["python", "-c", "print('hello pod')"],
         arguments=["echo", "10"],
         labels={"foo": "bar"},
         name="test-using-k8spodoperator-task-1",
@@ -46,8 +36,6 @@ with dag:
         is_delete_operator_pod=False,
         in_cluster=True,
         queue = 'kubernetes',
-        volumes=[volume],
-        volume_mounts=[volume_mount],
     )
     task_2 = KubernetesPodOperator(
         image="ubuntu:16.04",
@@ -60,8 +48,6 @@ with dag:
         is_delete_operator_pod=False,
         in_cluster=True,
         queue = 'kubernetes',
-        volumes=[volume],
-        volume_mounts=[volume_mount],
     )
 
 task_1 >> task_2
