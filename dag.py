@@ -38,10 +38,10 @@ with dag:
         get_logs=True,
     )
     task_2 = KubernetesPodOperator(
-        image="ubuntu:16.04",
+        image="airflow-custom:1.0.5",
         namespace="airflow",
-        cmds=["sleep"],
-        arguments=["300"],
+        cmds=["bash", "-cx"],
+        arguments=["pip", "list"],
         labels={"foo": "bar"},
         name="test-using-k8spodoperator-task-2",
         task_id="task-2-sleep",
