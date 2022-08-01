@@ -33,9 +33,8 @@ with dag:
         labels={"foo": "bar"},
         name="test-using-k8spodoperator-task-1",
         task_id="task-1-echo",
-        is_delete_operator_pod=False,
+        is_delete_operator_pod=True,
         in_cluster=True,
-        queue = 'kubernetes',
     )
     task_2 = KubernetesPodOperator(
         image="ubuntu:16.04",
@@ -45,9 +44,8 @@ with dag:
         labels={"foo": "bar"},
         name="test-using-k8spodoperator-task-2",
         task_id="task-2-sleep",
-        is_delete_operator_pod=False,
+        is_delete_operator_pod=True,
         in_cluster=True,
-        queue = 'kubernetes',
     )
 
 task_1 >> task_2
