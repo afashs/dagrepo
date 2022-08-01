@@ -4,7 +4,7 @@ from pathlib import Path
 
 from airflow import DAG
 from airflow.operators.dummy_operator import DummyOperator
-from airflow.contrib.operators.kubernetes_pod_operator import KubernetesPodOperator
+from airflow.contrib.operators.kubernetes_pod_operator import KubernetesPodOperator, Volume, VolumeMount
 
 log = logging.getLogger(__name__)
 
