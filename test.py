@@ -27,7 +27,7 @@ dag = DAG(
 with dag:
     task_1 = KubernetesPodOperator(
         image="ubuntu:16.04",
-        namespace="airflow-k8spodoperator",
+        namespace="airflow",
         cmds=["bash", "-cx"],
         arguments=["echo", "10"],
         labels={"foo": "bar"},
@@ -39,7 +39,7 @@ with dag:
     )
     task_2 = KubernetesPodOperator(
         image="ubuntu:16.04",
-        namespace="airflow-k8spodoperator",
+        namespace="airflow",
         cmds=["sleep"],
         arguments=["300"],
         labels={"foo": "bar"},
