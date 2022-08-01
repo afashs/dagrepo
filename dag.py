@@ -25,17 +25,14 @@ dag = DAG(
     },
 )
 
-volume_config= {
-    'persistentVolumeClaim':
-        {
-            'claimName': 'test-volume'
-        }
-    }
-volume = k8s.V1Volume(name='test-volume', configs=volume_config)
-volume_mount = k8s.V1VolumeMount('test-volume',
-                            mount_path='/root/mount_file',
-                            sub_path=None,
-                            read_only=True)
+volume_mount = k8s.V1VolumeMount(
+    name='test-volume', mount_path='/root/mount_file', sub_path=None, read_only=True
+)
+
+volume = k8s.V1Volume(
+    name='test-volume',
+    persistent_volume_claim=k8s.V1PersistentVolumeClaimVolumeSource(claim_name='test-volume'),
+)
 
 with dag:
     task_1 = KubernetesPodOperator(
