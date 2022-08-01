@@ -4,7 +4,8 @@ from pathlib import Path
 
 from airflow import DAG
 from airflow.operators.dummy_operator import DummyOperator
-from airflow.contrib.operators.kubernetes_pod_operator import KubernetesPodOperator, Volume, VolumeMount
+from airflow.contrib.operators.kubernetes_pod_operator import KubernetesPodOperator
+from kubernetes.client import models as k8s
 
 log = logging.getLogger(__name__)
 
@@ -30,8 +31,8 @@ volume_config= {
             'claimName': 'test-volume'
         }
     }
-volume = Volume(name='test-volume', configs=volume_config)
-volume_mount = VolumeMount('test-volume',
+volume = k8s.V1Volume(name='test-volume', configs=volume_config)
+volume_mount = k8s.V1VolumeMount('test-volume',
                             mount_path='/root/mount_file',
                             sub_path=None,
                             read_only=True)
