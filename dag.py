@@ -40,7 +40,7 @@ with dag:
         image="airflow-custom:1.0.5",
         namespace="airflow",
         cmds=["bash", "-cx"],
-        arguments=["pip", "list"],
+        arguments=["pip list"],
         labels={"foo": "bar"},
         name="test-using-k8spodoperator-task-2",
         task_id="task-2-sleep",
