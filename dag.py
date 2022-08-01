@@ -35,7 +35,6 @@ with dag:
         task_id="task-1-echo",
         is_delete_operator_pod=False,
         in_cluster=True,
-        get_logs=True,
     )
     task_2 = KubernetesPodOperator(
         image="airflow-custom:1.0.5",
@@ -47,7 +46,6 @@ with dag:
         task_id="task-2-sleep",
         is_delete_operator_pod=False,
         in_cluster=True,
-        get_logs=True,
     )
 
 task_1 >> task_2
