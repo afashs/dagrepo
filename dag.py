@@ -8,7 +8,7 @@ from airflow.contrib.operators.kubernetes_pod_operator import KubernetesPodOpera
 log = logging.getLogger(__name__)
 
 dag = DAG(
-    "example_using_k8s_pod_operator",
+    "example1",
     schedule_interval="0 1 * * *",
     catchup=False,
     default_args={
@@ -31,7 +31,7 @@ with dag:
         cmds=["python", "-c", "print('hello pod')"],
         arguments=["echo", "10"],
         labels={"foo": "bar"},
-        name="task-1-hello",
+        name="task-hello",
         task_id="task-1-echo",
         is_delete_operator_pod=False,
         in_cluster=True,
@@ -42,7 +42,7 @@ with dag:
         cmds=["bash", "-cx"],
         arguments=["pip list"],
         labels={"foo": "bar"},
-        name="task-2-pip",
+        name="task-pip",
         task_id="task-pip-llist",
         is_delete_operator_pod=False,
         in_cluster=True,
