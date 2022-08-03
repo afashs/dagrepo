@@ -66,7 +66,7 @@ affinity = k8s.V1Affinity(
                             k8s.V1LabelSelectorRequirement(key="security", operator="In", values="S1")
                         ]
                     ),
-                    topology_key="failure-domain.beta.kubernetes.io/zone",
+                    topologyKey="failure-domain.beta.kubernetes.io/zone",
                 ),
             )
         ]
