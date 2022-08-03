@@ -103,7 +103,6 @@ with DAG(
         hostnetwork=False,
         # tolerations=tolerations,
         init_containers=[init_container],
-        priority_class_name="medium",
         is_delete_operator_pod=False,
     )
 
