@@ -100,7 +100,7 @@ with DAG(
         name="airflow-test-pod",
         task_id="task",
         affinity=affinity,
-        hostnetwork=False,
+        # hostnetwork=False,
         tolerations=tolerations,
         init_containers=[init_container],
         priority_class_name="medium",
