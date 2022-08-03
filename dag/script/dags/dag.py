@@ -73,7 +73,7 @@ affinity = k8s.V1Affinity(
     ),
 )
 
-tolerations = [k8s.V1Toleration(key="key", operator="Equal", value="value")]
+# tolerations = [k8s.V1Toleration(key="key", operator="Equal", value="value")]
 
 # [END howto_operator_k8s_cluster_resources]
 
@@ -100,8 +100,8 @@ with DAG(
         name="airflow-test-pod",
         task_id="task",
         affinity=affinity,
-        # hostnetwork=False,
-        tolerations=tolerations,
+        hostnetwork=False,
+        # tolerations=tolerations,
         init_containers=[init_container],
         priority_class_name="medium",
         is_delete_operator_pod=False,
