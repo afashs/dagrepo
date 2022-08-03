@@ -30,7 +30,7 @@ dag = DAG(
 
 with dag:
     task_1 = KubernetesPodOperator(
-        image="hadoop-submit:1.0.0",
+        image="idock.daumkakao.io/ai_service/we-airflow:base",
         namespace="airflow",
         cmds=["python", "-c", "print('hello pod')"],
         arguments=["echo", "10"],
