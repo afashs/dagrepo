@@ -133,7 +133,7 @@ with DAG(
         is_delete_operator_pod=False,
     )
 
-    write_xcom >> pod_task_xcom_result
+    write_xcom
     # [END howto_operator_k8s_write_xcom]
 
     list(dag.tasks)
