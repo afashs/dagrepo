@@ -133,11 +133,6 @@ with DAG(
         is_delete_operator_pod=False,
     )
 
-    pod_task_xcom_result = BashOperator(
-        bash_command="echo \"{{ task_instance.xcom_pull('write-xcom')[0] }}\"",
-        task_id="pod_task_xcom_result",
-    )
-
     write_xcom >> pod_task_xcom_result
     # [END howto_operator_k8s_write_xcom]
 
