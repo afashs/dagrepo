@@ -4,14 +4,12 @@ from datetime import datetime
 from kubernetes.client import models as k8s
 
 from airflow import DAG
-from airflow.kubernetes.secret import Secret
-from airflow.operators.bash import BashOperator
 from airflow.providers.cncf.kubernetes.operators.kubernetes_pod import KubernetesPodOperator
 
 # [START howto_operator_k8s_cluster_resources]
-secret_file = Secret('volume', '/etc/sql_conn', 'airflow-secrets', 'sql_alchemy_conn')
-secret_env = Secret('env', 'SQL_CONN', 'airflow-secrets', 'sql_alchemy_conn')
-secret_all_keys = Secret('env', None, 'airflow-secrets-2')
+secret_file = k8s.V1Secret('volume', '/etc/sql_conn', 'airflow-secrets', 'sql_alchemy_conn')
+secret_env = k8s.V1Secret('env', 'SQL_CONN', 'airflow-secrets', 'sql_alchemy_conn')
+secret_all_keys = k8s.V1Secret('env', None, 'airflow-secrets-2')
 volume_mount = k8s.V1VolumeMount(
     name='test-volume', mount_path='/root/mount_file', sub_path=None, read_only=True
 )
